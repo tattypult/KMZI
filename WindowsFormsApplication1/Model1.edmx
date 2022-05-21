@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище mainModel" Provider="Devart.Data.SQLite" ProviderManifestToken="SQLite, 3.36.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FIREWALL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="DATE" Type="text" />
+          <Property Name="TIME" Type="text" />
+          <Property Name="ACTION" Type="text" />
+          <Property Name="PROTOCOL" Type="text" />
+          <Property Name="SRC_IP" Type="text" />
+          <Property Name="DST_IP" Type="text" />
+          <Property Name="SRC_PORT" Type="text" />
+          <Property Name="DST_PORT" Type="text" />
+          <Property Name="SIZE" Type="text" />
+          <Property Name="PATH" Type="text" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KASPERSKY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NUMBER" Type="text" />
+          <Property Name="MONTH" Type="text" />
+          <Property Name="CHISLO" Type="text" />
+          <Property Name="TIME" Type="text" />
+          <Property Name="INFO" Type="text" />
+          <Property Name="AVP" Type="real" />
+          <Property Name="CODE" Type="text" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USB">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NUMBER" Type="text" />
+          <Property Name="DATE_AND_TIME" Type="text" />
+          <Property Name="NAME_OF_USB" Type="text" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Хранилище mainModelContainer">
+          <EntitySet Name="FIREWALL" EntityType="Self.FIREWALL" Schema="main" store:Type="Tables" />
+          <EntitySet Name="KASPERSKY" EntityType="Self.KASPERSKY" Schema="main" store:Type="Tables" />
+          <EntitySet Name="USB" EntityType="Self.USB" Schema="main" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FIREWALL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="DATE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TIME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PROTOCOL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SRC_IP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DST_IP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SRC_PORT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DST_PORT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SIZE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PATH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="KASPERSKY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NUMBER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MONTH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CHISLO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TIME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="INFO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AVP" Type="Double" />
+          <Property Name="CODE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="USB">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NUMBER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DATE_AND_TIME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NAME_OF_USB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FIREWALL" EntityType="Self.FIREWALL" />
+          <EntitySet Name="KASPERSKY" EntityType="Self.KASPERSKY" />
+          <EntitySet Name="USB" EntityType="Self.USB" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище mainModelContainer" CdmEntityContainer="mainEntities">
+          <EntitySetMapping Name="FIREWALL">
+            <EntityTypeMapping TypeName="mainModel.FIREWALL">
+              <MappingFragment StoreEntitySet="FIREWALL">
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="TIME" ColumnName="TIME" />
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+                <ScalarProperty Name="PROTOCOL" ColumnName="PROTOCOL" />
+                <ScalarProperty Name="SRC_IP" ColumnName="SRC_IP" />
+                <ScalarProperty Name="DST_IP" ColumnName="DST_IP" />
+                <ScalarProperty Name="SRC_PORT" ColumnName="SRC_PORT" />
+                <ScalarProperty Name="DST_PORT" ColumnName="DST_PORT" />
+                <ScalarProperty Name="SIZE" ColumnName="SIZE" />
+                <ScalarProperty Name="PATH" ColumnName="PATH" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KASPERSKY">
+            <EntityTypeMapping TypeName="mainModel.KASPERSKY">
+              <MappingFragment StoreEntitySet="KASPERSKY">
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+                <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+                <ScalarProperty Name="CHISLO" ColumnName="CHISLO" />
+                <ScalarProperty Name="TIME" ColumnName="TIME" />
+                <ScalarProperty Name="INFO" ColumnName="INFO" />
+                <ScalarProperty Name="AVP" ColumnName="AVP" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USB">
+            <EntityTypeMapping TypeName="mainModel.USB">
+              <MappingFragment StoreEntitySet="USB">
+                <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+                <ScalarProperty Name="DATE_AND_TIME" ColumnName="DATE_AND_TIME" />
+                <ScalarProperty Name="NAME_OF_USB" ColumnName="NAME_OF_USB" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

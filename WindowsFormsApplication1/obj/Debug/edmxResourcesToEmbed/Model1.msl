@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище mainModelContainer" CdmEntityContainer="mainEntities">
+    <EntitySetMapping Name="FIREWALL">
+      <EntityTypeMapping TypeName="mainModel.FIREWALL">
+        <MappingFragment StoreEntitySet="FIREWALL">
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="TIME" ColumnName="TIME" />
+          <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+          <ScalarProperty Name="PROTOCOL" ColumnName="PROTOCOL" />
+          <ScalarProperty Name="SRC_IP" ColumnName="SRC_IP" />
+          <ScalarProperty Name="DST_IP" ColumnName="DST_IP" />
+          <ScalarProperty Name="SRC_PORT" ColumnName="SRC_PORT" />
+          <ScalarProperty Name="DST_PORT" ColumnName="DST_PORT" />
+          <ScalarProperty Name="SIZE" ColumnName="SIZE" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KASPERSKY">
+      <EntityTypeMapping TypeName="mainModel.KASPERSKY">
+        <MappingFragment StoreEntitySet="KASPERSKY">
+          <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+          <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+          <ScalarProperty Name="CHISLO" ColumnName="CHISLO" />
+          <ScalarProperty Name="TIME" ColumnName="TIME" />
+          <ScalarProperty Name="INFO" ColumnName="INFO" />
+          <ScalarProperty Name="AVP" ColumnName="AVP" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USB">
+      <EntityTypeMapping TypeName="mainModel.USB">
+        <MappingFragment StoreEntitySet="USB">
+          <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+          <ScalarProperty Name="DATE_AND_TIME" ColumnName="DATE_AND_TIME" />
+          <ScalarProperty Name="NAME_OF_USB" ColumnName="NAME_OF_USB" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

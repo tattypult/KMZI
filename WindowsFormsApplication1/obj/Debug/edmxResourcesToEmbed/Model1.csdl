@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="FIREWALL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="DATE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TIME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ACTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PROTOCOL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SRC_IP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DST_IP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SRC_PORT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DST_PORT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SIZE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PATH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="KASPERSKY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="NUMBER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MONTH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CHISLO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TIME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="INFO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AVP" Type="Double" />
+    <Property Name="CODE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="USB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="NUMBER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DATE_AND_TIME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NAME_OF_USB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FIREWALL" EntityType="Self.FIREWALL" />
+    <EntitySet Name="KASPERSKY" EntityType="Self.KASPERSKY" />
+    <EntitySet Name="USB" EntityType="Self.USB" />
+  </EntityContainer>
+</Schema>

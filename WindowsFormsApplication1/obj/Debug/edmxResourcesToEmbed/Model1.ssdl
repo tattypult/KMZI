@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище mainModel" Provider="Devart.Data.SQLite" ProviderManifestToken="SQLite, 3.36.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FIREWALL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="DATE" Type="text" />
+    <Property Name="TIME" Type="text" />
+    <Property Name="ACTION" Type="text" />
+    <Property Name="PROTOCOL" Type="text" />
+    <Property Name="SRC_IP" Type="text" />
+    <Property Name="DST_IP" Type="text" />
+    <Property Name="SRC_PORT" Type="text" />
+    <Property Name="DST_PORT" Type="text" />
+    <Property Name="SIZE" Type="text" />
+    <Property Name="PATH" Type="text" />
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KASPERSKY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="NUMBER" Type="text" />
+    <Property Name="MONTH" Type="text" />
+    <Property Name="CHISLO" Type="text" />
+    <Property Name="TIME" Type="text" />
+    <Property Name="INFO" Type="text" />
+    <Property Name="AVP" Type="real" />
+    <Property Name="CODE" Type="text" />
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="NUMBER" Type="text" />
+    <Property Name="DATE_AND_TIME" Type="text" />
+    <Property Name="NAME_OF_USB" Type="text" />
+    <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="Хранилище mainModelContainer">
+    <EntitySet Name="FIREWALL" EntityType="Self.FIREWALL" Schema="main" store:Type="Tables" />
+    <EntitySet Name="KASPERSKY" EntityType="Self.KASPERSKY" Schema="main" store:Type="Tables" />
+    <EntitySet Name="USB" EntityType="Self.USB" Schema="main" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
