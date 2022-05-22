@@ -44,3 +44,4 @@ C:\Users\user\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debu
 C:\Users\user\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\DB.db
 C:\Users\user\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Devart.Data.dll
 C:\Users\user\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Devart.Data.SQLite.dll
+C:\Users\user\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Message.resources

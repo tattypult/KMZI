@@ -1,8 +1,5 @@
-﻿using Devart.Data.SQLite;
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,6 +12,7 @@ namespace WindowsFormsApplication1
         KASPERSKY kaspersky = new KASPERSKY();
         USB usb = new USB();
         string path = "C:\\Users\\user\\Desktop\\WindowsFormsApplication1\\WindowsFormsApplication1\\data.txt";
+        Message mes;
 
         string[] s;
         string[] s2;
@@ -32,7 +30,7 @@ namespace WindowsFormsApplication1
                     dataGridView1.Rows[i].Cells[j].Value = s2[j];
                 }
             }
-
+            mes = new Message("");
             fire = new FIREWALL();
         }
 
@@ -40,7 +38,7 @@ namespace WindowsFormsApplication1
         {
             using (StreamWriter str = new StreamWriter(path, false))
             {
-                for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dataGridView1.Columns.Count; j++)
                     {
@@ -76,51 +74,89 @@ namespace WindowsFormsApplication1
             //sqConnection.Close();
 
             //Написать проверку каждого столбца и проверки добавления новых данных
+            foreach (var item in main.FIREWALL)
+            {
+                //Parallel.Invoke
+                //    (() =>
+                //   {
+                //       for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+                //       {
+                //           if (item.SRC_IP == dataGridView1.Rows[i].Cells[0].Value.ToString())
+                //           {
+                //               Form fc = Application.OpenForms["Message"];
 
-            //foreach (var item in main.FIREWALL)
-            //{
-            //    Parallel.Invoke(
-            //        () =>
-            //        {
-            //            for (int i = 0; i < listBox1.Items.Count; i++)
-            //            {
-            //                if (item.SRC_IP == listBox1.Items[3].ToString())
-            //                {
-            //                    MessageBox.Show("Alarm Пизда");
-            //                }
-            //            }
-            //        },
-            //        () =>
-            //        {
-            //            for (int i = 0; i < listBox1.Items.Count; i++)
-            //            {
-            //                if (item.SRC_PORT == listBox1.Items[3].ToString())
-            //                {
-            //                    MessageBox.Show("Alarm Пизда");
-            //                }
-            //            }
-            //        },
-            //         () =>
-            //        {
-            //            for (int i = 0; i < listBox1.Items.Count; i++)
-            //            {
-            //                if (item.DST_IP == listBox1.Items[3].ToString())
-            //                {
-            //                    MessageBox.Show("Alarm Пизда");
-            //                }
-            //            }
-            //        },
-            //        () =>
-            //        {
-            //            for (int i = 0; i < listBox1.Items.Count; i++)
-            //            {
-            //                if (item.DST_PORT == listBox1.Items[3].ToString())
-            //                {
-            //                    MessageBox.Show("Alarm Пизда");
-            //                }
-            //            }
-            //        });
-            //}
+                //               if (fc != null)
+                //                   fc.Close();
+                //               mes.Show();
+                //               mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.SRC_IP;
+                //           }
+
+                //       }
+                //   },
+                //   () =>
+                //   {
+                //       for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+                //       {
+                //           if (item.SRC_PORT == dataGridView1.Rows[i].Cells[1].Value.ToString())
+                //           {
+                //               Form fc = Application.OpenForms["Message"];
+
+                //               if (fc != null)
+                //                   fc.Close();
+
+
+                //               mes.Show();
+                //               mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.SRC_PORT;
+                //           }
+
+                //       }
+                //   },
+                //   () =>
+                //   {
+                //       for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+                //       {
+                //           if (item.DST_IP == dataGridView1.Rows[i].Cells[2].Value.ToString())
+                //           {
+                //               Form fc = Application.OpenForms["Message"];
+
+                //               if (fc != null)
+                //                   fc.Close();
+
+
+                //               mes.Show();
+                //               mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.DST_IP;
+                //           }
+
+                //       }
+                //   },
+                //       () =>
+                //       {
+                //           for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+                //           {
+                //               if (item.DST_PORT == dataGridView1.Rows[i].Cells[3].Value.ToString())
+                //               {
+                //                   Form fc = Application.OpenForms["Message"];
+
+                //                   if (fc != null)
+                //                       fc.Close();
+
+                //                   mes.Show();
+                //                   mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.DST_PORT;
+                //               }
+
+                //           }
+                //       }
+                //    );
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    if (item.SRC_IP == dataGridView1.Rows[i].Cells[0].Value.ToString())
+                    {
+                        new Message(item.SRC_IP).Show();
+                    }
+
+                }
+            }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
