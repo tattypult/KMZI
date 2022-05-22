@@ -1,39 +1,52 @@
-﻿using System;
+﻿using Devart.Data.SQLite;
+using System;
+using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
+using TableDependency.SqlClient;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        mainEntities main = new mainEntities();
-        FIREWALL fire;
-        KASPERSKY kaspersky = new KASPERSKY();
-        USB usb = new USB();
         string path = "C:\\Users\\user\\Desktop\\WindowsFormsApplication1\\WindowsFormsApplication1\\data.txt";
-        Message mes;
+        string[] str;
+        string[] line;
+        ExaminationBD examinationBD;
+        public SqlTableDependency<FIREWALL> fire_dependency;
+        double[] size = new double[4];
+        mainEntities main;
+        long ID = 0;
+        //string connectionString = "Data Source=DB.db;";
 
-        string[] s;
-        string[] s2;
         public Form1()
         {
+
+            main = new mainEntities();
+            On_Changed();
+            //string query = "SELECT SRC_IP,SRC_PORT,DST_IP,DST_PORT FROM FIREWALL";
+            //SqlCommand command = new SqlCommand(query);
+            //var dep = new SqlDependency(command);
+            //SQLiteConnection sql=new SQLiteConnection(connectionString);
+            //sql.Open();
+            examinationBD = new ExaminationBD();
             InitializeComponent();
-            s = File.ReadAllLines(path);
-            s2 = new string[s.Length * 4];
-            dataGridView1.Rows.Add(s.Length);
-            for (int i = 0; i < s.Length; i++)
+            str = File.ReadAllLines(path);
+            line = new string[str.Length * 4];
+            dataGridView1.Rows.Add(str.Length);
+            for (int i = 0; i < str.Length; i++)
             {
-                s2 = s[i].Split('^');
-                for (int j = 0; j < s2.Length; j++)
+                line = str[i].Split('^');
+                for (int j = 0; j < line.Length; j++)
                 {
-                    dataGridView1.Rows[i].Cells[j].Value = s2[j];
+                    dataGridView1.Rows[i].Cells[j].Value = line[j];
                 }
             }
-            mes = new Message("");
-            fire = new FIREWALL();
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             using (StreamWriter str = new StreamWriter(path, false))
@@ -53,8 +66,23 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
-        private void button2_Click(object sender, EventArgs e)
+        public void On_Changed()
+        {
+            var timer = new System.Timers.Timer() { Interval = 10000 };
+            timer.Start();
+            timer.Elapsed += async (x, y) =>
+            {
+                await Task.Run(async
+                    () =>
+                {
+                        await examinationBD.ExaminationSrcPort();
+                        await examinationBD.ExaminationSrc();
+                        await examinationBD.ExaminationDstPort();
+                        await examinationBD.ExaminationDst();
+                });
+            };
+        }
+        async private void button2_Click(object sender, EventArgs e)
         {
             //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";
             //string myConnString = "DataSource=DB.db;";
@@ -74,94 +102,22 @@ namespace WindowsFormsApplication1
             //sqConnection.Close();
 
             //Написать проверку каждого столбца и проверки добавления новых данных
-            foreach (var item in main.FIREWALL)
-            {
-                //Parallel.Invoke
-                //    (() =>
-                //   {
-                //       for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
-                //       {
-                //           if (item.SRC_IP == dataGridView1.Rows[i].Cells[0].Value.ToString())
-                //           {
-                //               Form fc = Application.OpenForms["Message"];
+            await examinationBD.ExaminationSrcPort();
+            await examinationBD.ExaminationSrc();
+            await examinationBD.ExaminationDstPort();
+            await examinationBD.ExaminationDst();
 
-                //               if (fc != null)
-                //                   fc.Close();
-                //               mes.Show();
-                //               mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.SRC_IP;
-                //           }
-
-                //       }
-                //   },
-                //   () =>
-                //   {
-                //       for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
-                //       {
-                //           if (item.SRC_PORT == dataGridView1.Rows[i].Cells[1].Value.ToString())
-                //           {
-                //               Form fc = Application.OpenForms["Message"];
-
-                //               if (fc != null)
-                //                   fc.Close();
-
-
-                //               mes.Show();
-                //               mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.SRC_PORT;
-                //           }
-
-                //       }
-                //   },
-                //   () =>
-                //   {
-                //       for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
-                //       {
-                //           if (item.DST_IP == dataGridView1.Rows[i].Cells[2].Value.ToString())
-                //           {
-                //               Form fc = Application.OpenForms["Message"];
-
-                //               if (fc != null)
-                //                   fc.Close();
-
-
-                //               mes.Show();
-                //               mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.DST_IP;
-                //           }
-
-                //       }
-                //   },
-                //       () =>
-                //       {
-                //           for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
-                //           {
-                //               if (item.DST_PORT == dataGridView1.Rows[i].Cells[3].Value.ToString())
-                //               {
-                //                   Form fc = Application.OpenForms["Message"];
-
-                //                   if (fc != null)
-                //                       fc.Close();
-
-                //                   mes.Show();
-                //                   mes.label1.Text = "Alarm,Джонни они на деревьях" + "\n" + item.DST_PORT;
-                //               }
-
-                //           }
-                //       }
-                //    );
-                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                {
-                    if (item.SRC_IP == dataGridView1.Rows[i].Cells[0].Value.ToString())
-                    {
-                        new Message(item.SRC_IP).Show();
-                    }
-
-                }
-            }
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ;
         }
     }
 }

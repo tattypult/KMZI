@@ -8,7 +8,7 @@ namespace WindowsFormsApplication1
 {
     static class Program
     {
-        static public Message message;
+        static public Form1 message;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>

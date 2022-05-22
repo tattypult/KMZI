@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
 
         private void Message_Load(object sender, EventArgs e)
         {
-            label1.Text = str;
+            label1.Text = "Alarm,все пиздец, Джонни они на деревьях"+"\n"+str;
             this.StartPosition = FormStartPosition.Manual;
 
             var wArea = Screen.PrimaryScreen.WorkingArea;
