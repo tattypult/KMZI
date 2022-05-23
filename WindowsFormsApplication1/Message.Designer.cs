@@ -63,7 +63,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Message";
             this.Text = "Message";
-            this.Load += new System.EventHandler(this.Message_Load);
+            this.Load +=  new System.EventHandler(this.Message_Load);
             this.ResumeLayout(false);
 
         }

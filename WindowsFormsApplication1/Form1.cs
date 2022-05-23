@@ -17,22 +17,14 @@ namespace WindowsFormsApplication1
         string[] str;
         string[] line;
         ExaminationBD examinationBD;
-        public SqlTableDependency<FIREWALL> fire_dependency;
         double[] size = new double[4];
         mainEntities main;
-        long ID = 0;
+        Thread thread;
         //string connectionString = "Data Source=DB.db;";
 
         public Form1()
         {
-
             main = new mainEntities();
-            On_Changed();
-            //string query = "SELECT SRC_IP,SRC_PORT,DST_IP,DST_PORT FROM FIREWALL";
-            //SqlCommand command = new SqlCommand(query);
-            //var dep = new SqlDependency(command);
-            //SQLiteConnection sql=new SQLiteConnection(connectionString);
-            //sql.Open();
             examinationBD = new ExaminationBD();
             InitializeComponent();
             str = File.ReadAllLines(path);
@@ -66,48 +58,32 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-        public void On_Changed()
+        public void On_ChangedAsync()
         {
-            var timer = new System.Timers.Timer() { Interval = 10000 };
-            timer.Start();
-            timer.Elapsed += async (x, y) =>
-            {
-                await Task.Run(async
-                    () =>
-                {
-                        await examinationBD.ExaminationSrcPort();
-                        await examinationBD.ExaminationSrc();
-                        await examinationBD.ExaminationDstPort();
-                        await examinationBD.ExaminationDst();
-                });
-            };
+            var outer = Task.Factory.StartNew(() =>
+              {
+                  examinationBD.ExaminationSrcPort();
+                  examinationBD.ExaminationSrc();
+                  examinationBD.ExaminationDstPort();
+                  examinationBD.ExaminationDst();
+              });
+
         }
         async private void button2_Click(object sender, EventArgs e)
         {
-            //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";
-            //string myConnString = "DataSource=DB.db;";
-            //SQLiteConnection sqConnection = new SQLiteConnection(myConnString);
-            //SQLiteCommand sqCommand = new SQLiteCommand(mySelectQuery, sqConnection);
-            //sqConnection.Open();
-            //SQLiteDataReader sqReader = sqCommand.ExecuteReader();
-            //var enumer= sqReader.;
-            //for (int i = 0; sqReader.Read(); i++)
-            //{
 
-            //    if (enumer == listBox1.Items[3])
-            //        MessageBox.Show("Alarm Пиздец");
-            //}
-            //sqReader.Close();
-            //// always call Close when done reading.
-            //sqConnection.Close();
 
             //Написать проверку каждого столбца и проверки добавления новых данных
-            await examinationBD.ExaminationSrcPort();
-            await examinationBD.ExaminationSrc();
-            await examinationBD.ExaminationDstPort();
-            await examinationBD.ExaminationDst();
-
-
+            thread = new Thread(async () =>
+            {
+                while (true)
+                {
+                    On_ChangedAsync();
+                    await Task.Delay(10000);
+                }
+            });
+            thread.Start();
+            await Task.Delay(0);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -117,7 +93,28 @@ namespace WindowsFormsApplication1
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ;
+
         }
     }
+    //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";
+    //string myConnString = "DataSource=DB.db;";
+    //SQLiteConnection sqConnection = new SQLiteConnection(myConnString);
+    //SQLiteCommand sqCommand = new SQLiteCommand(mySelectQuery, sqConnection);
+    //sqConnection.Open();
+    //SQLiteDataReader sqReader = sqCommand.ExecuteReader();
+    //var enumer= sqReader.;
+    //for (int i = 0; sqReader.Read(); i++)
+    //{
+
+    //    if (enumer == listBox1.Items[3])
+    //        MessageBox.Show("Alarm Пиздец");
+    //}
+    //sqReader.Close();
+    //// always call Close when done reading.
+    //sqConnection.Close();
+    //string query = "SELECT SRC_IP,SRC_PORT,DST_IP,DST_PORT FROM FIREWALL";
+    //SqlCommand command = new SqlCommand(query);
+    //var dep = new SqlDependency(command);
+    //SQLiteConnection sql=new SQLiteConnection(connectionString);
+    //sql.Open();
 }

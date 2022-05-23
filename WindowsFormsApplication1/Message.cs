@@ -24,7 +24,6 @@ namespace WindowsFormsApplication1
         {
             label1.Text = "Alarm,все пиздец, Джонни они на деревьях"+"\n"+str;
             this.StartPosition = FormStartPosition.Manual;
-
             var wArea = Screen.PrimaryScreen.WorkingArea;
             this.Left = wArea.Width + wArea.Left - this.Width;
             this.Top = wArea.Height + wArea.Top - this.Height;
