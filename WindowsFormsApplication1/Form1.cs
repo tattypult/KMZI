@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        string path = @"C:\Users\Admin\Desktop\WFA1\WindowsFormsApplication1\data.txt";
+        string path = @"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\data.txt";
         string[] str;
         string[] line;
         double[] size = new double[4];
@@ -20,20 +21,17 @@ namespace WindowsFormsApplication1
 
         ExaminationBD examinationBD;
         mainEntities main;
-        Thread thread;
-        List<string> list;
         SQLiteDataAdapter adapter;
         SQLiteConnection sqConnection;
         SQLiteCommand sqCommand;
         SQLiteDataSet litedataset;
         SQLiteDataReader sqlreader;
-
+        System.Timers.Timer timer = new System.Timers.Timer();
 
         public Form1()
         {
             litedataset = new SQLiteDataSet();
             sqConnection = new SQLiteConnection(connectionString);
-            sqCommand = new SQLiteCommand(query, sqConnection);
             adapter = new SQLiteDataAdapter(sqCommand);
 
             main = new mainEntities();
@@ -50,7 +48,10 @@ namespace WindowsFormsApplication1
                     dataGridView1.Rows[i].Cells[j].Value = line[j];
                 }
             }
-            list = new List<string>();
+
+            timer.Interval = 5000;
+            timer.Elapsed += button4_Click_1;
+            timer.Start();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -71,15 +72,31 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-        public void On_ChangedAsync()
+        async public Task On_ChangedAsync()
         {
             sqConnection.Open();
+            sqCommand = new SQLiteCommand(query, sqConnection);
             int temp = Convert.ToInt32(sqCommand.ExecuteScalar());
-            sqlreader = sqCommand.ExecuteReader();
-            sqlreader.Read();
-            textBox1.Text = ((int)sqlreader["ID"]-1).ToString();
-            sqlreader.Close();
+            var p = main.FIREWALL.Where(id => id.ID == temp).Select(k => new { k.SRC_IP, k.SRC_PORT, k.DST_IP, k.DST_PORT });
+            foreach (var item in p)
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                {
+                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                    {
+                        if (item.SRC_IP == dataGridView1.Rows[i].Cells[j].Value.ToString())
+                            MessageBox.Show("Появилось новое сообщение");
+                        if (item.SRC_PORT == dataGridView1.Rows[i].Cells[j].Value.ToString())
+                            MessageBox.Show("Появилось новое сообщение");
+                        if (item.DST_IP == dataGridView1.Rows[i].Cells[j].Value.ToString())
+                            MessageBox.Show("Появилось новое сообщение");
+                        if (item.DST_PORT == dataGridView1.Rows[i].Cells[j].Value.ToString())
+                            MessageBox.Show("Появилось новое сообщение");
+                    }
+                }
+            }
             sqConnection.Close();
+            await Task.Delay(0);
         }
 
         public void OnChange()
@@ -105,17 +122,11 @@ namespace WindowsFormsApplication1
             await examinationBD.ExaminationSrcPort();
             await examinationBD.ExaminationDstPort();
             await examinationBD.ExaminationDst();
-            On_ChangedAsync();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        async private void button4_Click_1(object sender, EventArgs e)
         {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
+          await On_ChangedAsync();
         }
     }
     //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";
