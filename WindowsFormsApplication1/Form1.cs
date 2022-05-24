@@ -1,29 +1,41 @@
 ﻿using Devart.Data.SQLite;
 using System;
-using System.Data.SqlClient;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
-using TableDependency.SqlClient;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        string path = "C:\\Users\\user\\Desktop\\WindowsFormsApplication1\\WindowsFormsApplication1\\data.txt";
+        string path = @"C:\Users\Admin\Desktop\WFA1\WindowsFormsApplication1\data.txt";
         string[] str;
         string[] line;
-        ExaminationBD examinationBD;
         double[] size = new double[4];
+        string connectionString = "Data Source=DB.db;";
+        string query = "SELECT MAX(ID) From FIREWALL";
+        //string query = "select SRC_IP,SRC_PORT,DST_IP,DST_PORT from FIREWALL";
+
+        ExaminationBD examinationBD;
         mainEntities main;
         Thread thread;
-        //string connectionString = "Data Source=DB.db;";
+        List<string> list;
+        SQLiteDataAdapter adapter;
+        SQLiteConnection sqConnection;
+        SQLiteCommand sqCommand;
+        SQLiteDataSet litedataset;
+        SQLiteDataReader sqlreader;
+
 
         public Form1()
         {
+            litedataset = new SQLiteDataSet();
+            sqConnection = new SQLiteConnection(connectionString);
+            sqCommand = new SQLiteCommand(query, sqConnection);
+            adapter = new SQLiteDataAdapter(sqCommand);
+
             main = new mainEntities();
             examinationBD = new ExaminationBD();
             InitializeComponent();
@@ -38,6 +50,7 @@ namespace WindowsFormsApplication1
                     dataGridView1.Rows[i].Cells[j].Value = line[j];
                 }
             }
+            list = new List<string>();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -60,30 +73,39 @@ namespace WindowsFormsApplication1
         }
         public void On_ChangedAsync()
         {
-            var outer = Task.Factory.StartNew(() =>
-              {
-                  examinationBD.ExaminationSrcPort();
-                  examinationBD.ExaminationSrc();
-                  examinationBD.ExaminationDstPort();
-                  examinationBD.ExaminationDst();
-              });
-
+            sqConnection.Open();
+            int temp = Convert.ToInt32(sqCommand.ExecuteScalar());
+            sqlreader = sqCommand.ExecuteReader();
+            sqlreader.Read();
+            textBox1.Text = ((int)sqlreader["ID"]-1).ToString();
+            sqlreader.Close();
+            sqConnection.Close();
         }
+
+        public void OnChange()
+        {
+            for (int i = 0; i < Program.message.dataGridView1.Rows.Count - 1; i++)
+            {
+                sqCommand = new SQLiteCommand("SELECT Count(SRC_IP) from FIREWALL where SRC_IP = '" + Program.message.dataGridView1.Rows[i].Cells[0].Value.ToString() + "'", sqConnection);
+                int temp = Convert.ToInt32(sqCommand.ExecuteScalar());
+                if (temp != 0)
+                {
+                    new Message(Program.message.dataGridView1.Rows[i].Cells[0].Value.ToString()).Show();
+                }
+            }
+        }
+        /// <summary>
+        /// При запуске происходит проверка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async private void button2_Click(object sender, EventArgs e)
         {
-
-
-            //Написать проверку каждого столбца и проверки добавления новых данных
-            thread = new Thread(async () =>
-            {
-                while (true)
-                {
-                    On_ChangedAsync();
-                    await Task.Delay(10000);
-                }
-            });
-            thread.Start();
-            await Task.Delay(0);
+            await examinationBD.ExaminationSrc();
+            await examinationBD.ExaminationSrcPort();
+            await examinationBD.ExaminationDstPort();
+            await examinationBD.ExaminationDst();
+            On_ChangedAsync();
         }
 
         private void button3_Click(object sender, EventArgs e)
