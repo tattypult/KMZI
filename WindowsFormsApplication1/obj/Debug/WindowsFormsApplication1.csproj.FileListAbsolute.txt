@@ -104,3 +104,5 @@ C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplic
 C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.CopyComplete
 C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Admin\Desktop\WFA1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Journal.resources
+C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Journal.resources

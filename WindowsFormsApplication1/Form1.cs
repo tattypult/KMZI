@@ -14,32 +14,24 @@ namespace WindowsFormsApplication1
         string path = @"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\data.txt";
         string[] str;
         string[] line;
+        int count = 0;
+        long ID = 0;
         double[] size = new double[4];
-        string connectionString = "Data Source=DB.db;";
-        string query = "SELECT MAX(ID) From FIREWALL";
-        //string query = "select SRC_IP,SRC_PORT,DST_IP,DST_PORT from FIREWALL";
+        string datetime = null;
 
         ExaminationBD examinationBD;
         mainEntities main;
-        SQLiteDataAdapter adapter;
-        SQLiteConnection sqConnection;
-        SQLiteCommand sqCommand;
-        SQLiteDataSet litedataset;
-        SQLiteDataReader sqlreader;
         System.Timers.Timer timer = new System.Timers.Timer();
 
         public Form1()
         {
-            litedataset = new SQLiteDataSet();
-            sqConnection = new SQLiteConnection(connectionString);
-            adapter = new SQLiteDataAdapter(sqCommand);
-
             main = new mainEntities();
             examinationBD = new ExaminationBD();
             InitializeComponent();
             str = File.ReadAllLines(path);
             line = new string[str.Length * 4];
             dataGridView1.Rows.Add(str.Length);
+            int t = dataGridView1.RowCount;
             for (int i = 0; i < str.Length; i++)
             {
                 line = str[i].Split('^');
@@ -48,11 +40,12 @@ namespace WindowsFormsApplication1
                     dataGridView1.Rows[i].Cells[j].Value = line[j];
                 }
             }
-
-            timer.Interval = 5000;
-            timer.Elapsed += button4_Click_1;
-            timer.Start();
         }
+        /// <summary>
+        /// Добавляет запрещенные значения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             using (StreamWriter str = new StreamWriter(path, false))
@@ -72,61 +65,105 @@ namespace WindowsFormsApplication1
                 }
             }
         }
+        /// <summary>
+        /// Проверка и реакция на зименения в базе данных
+        /// </summary>
+        /// <returns></returns>
         async public Task On_ChangedAsync()
         {
-            sqConnection.Open();
-            sqCommand = new SQLiteCommand(query, sqConnection);
-            int temp = Convert.ToInt32(sqCommand.ExecuteScalar());
-            var p = main.FIREWALL.Where(id => id.ID == temp).Select(k => new { k.SRC_IP, k.SRC_PORT, k.DST_IP, k.DST_PORT });
-            foreach (var item in p)
+            count = 0;
+            long temp = main.FIREWALL.Max(id => id.ID);
+            if (ID == temp)
+                goto Next;
+
+            ID = temp;
+            var p = main.FIREWALL.
+                Where(id => id.ID == temp).
+                Select(k => new { k.SRC_IP, k.SRC_PORT, k.DST_IP, k.DST_PORT });
+            using (StreamWriter stream = new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true))
             {
-                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                foreach (var item in p)
                 {
                     for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                     {
-                        if (item.SRC_IP == dataGridView1.Rows[i].Cells[j].Value.ToString())
-                            MessageBox.Show("Появилось новое сообщение");
-                        if (item.SRC_PORT == dataGridView1.Rows[i].Cells[j].Value.ToString())
-                            MessageBox.Show("Появилось новое сообщение");
-                        if (item.DST_IP == dataGridView1.Rows[i].Cells[j].Value.ToString())
-                            MessageBox.Show("Появилось новое сообщение");
-                        if (item.DST_PORT == dataGridView1.Rows[i].Cells[j].Value.ToString())
-                            MessageBox.Show("Появилось новое сообщение");
+                        if (item.SRC_IP == dataGridView1.Rows[i].Cells[0].Value.ToString())
+                        {
+                            stream.Write(await SetDateTime(ID) + " Событие:" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "\n");
+                        }
+                        if (item.SRC_PORT == dataGridView1.Rows[i].Cells[1].Value.ToString())
+                        {
+                            stream.Write(await SetDateTime(ID) + " Событие:" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "\n");
+                            count++;
+                        }
+                        if (item.DST_IP == dataGridView1.Rows[i].Cells[2].Value.ToString())
+                        {
+                            stream.Write(await SetDateTime(ID) + " Событие:" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "\n");
+                            count++;
+                        }
+                        if (item.DST_PORT == dataGridView1.Rows[i].Cells[3].Value.ToString())
+                        {
+                            stream.Write(await SetDateTime(ID) + " Событие:" + dataGridView1.Rows[i].Cells[3].Value.ToString() + "\n");
+                            count++;
+                        }
                     }
                 }
-            }
-            sqConnection.Close();
-            await Task.Delay(0);
+            };
+            if (count > 0)
+                new Message().ShowDialog();
+            Next: { }
         }
 
-        public void OnChange()
+        private async Task<string> SetDateTime(long ID)
         {
-            for (int i = 0; i < Program.message.dataGridView1.Rows.Count - 1; i++)
+            foreach (var item in main.FIREWALL.
+                Where(x => x.ID == ID).
+                Select(l => new { l.DATE, l.TIME }))
             {
-                sqCommand = new SQLiteCommand("SELECT Count(SRC_IP) from FIREWALL where SRC_IP = '" + Program.message.dataGridView1.Rows[i].Cells[0].Value.ToString() + "'", sqConnection);
-                int temp = Convert.ToInt32(sqCommand.ExecuteScalar());
-                if (temp != 0)
-                {
-                    new Message(Program.message.dataGridView1.Rows[i].Cells[0].Value.ToString()).Show();
-                }
+                datetime = " Дата: " + item.DATE + " Время: " + item.TIME;
             }
+            await Task.Delay(0);
+            return datetime;
         }
+
         /// <summary>
-        /// При запуске происходит проверка
+        /// Проверить всю базу данных
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         async private void button2_Click(object sender, EventArgs e)
         {
-            await examinationBD.ExaminationSrc();
-            await examinationBD.ExaminationSrcPort();
-            await examinationBD.ExaminationDstPort();
-            await examinationBD.ExaminationDst();
+            count = await examinationBD.ExaminationSrc(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            count = await examinationBD.ExaminationSrcPort(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            count = await examinationBD.ExaminationDstPort(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            count = await examinationBD.ExaminationDst(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            count = await examinationBD.ExaminationINFO(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            count = await examinationBD.ExaminationCODE(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            count = await examinationBD.ExaminationNAME_OF_USB(new StreamWriter(@"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt", true));
+            if (count > 0)
+            {
+                new Message().ShowDialog();
+            }
         }
-
+        /// <summary>
+        /// Метод, вызывающийся через 1 сек и проверяющий базу данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async private void button4_Click_1(object sender, EventArgs e)
         {
-          await On_ChangedAsync();
+            timer.Interval = 5000;
+            timer.Elapsed += Timer;
+            timer.Start();
+            await Task.Delay(0);
+        }
+        async private void Timer(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            await On_ChangedAsync();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
         }
     }
     //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -40,49 +39,41 @@
             this.DST_Port = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.INFO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NAME_OF_USB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button1.Location = new System.Drawing.Point(0, 401);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(0, 294);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(893, 30);
+            this.button1.Size = new System.Drawing.Size(142, 57);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Добавить";
+            this.button1.Text = "Добавить запрещенный значения";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(0, 327);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(895, 24);
-            this.textBox1.TabIndex = 2;
-            // 
             // button2
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button2.Location = new System.Drawing.Point(0, 351);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(629, 294);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(893, 50);
+            this.button2.Size = new System.Drawing.Size(142, 57);
             this.button2.TabIndex = 3;
-            this.button2.Text = "Начать";
+            this.button2.Text = "Поиск по всей базе данных";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.Location = new System.Drawing.Point(0, 0);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(150, 294);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(893, 30);
+            this.button3.Size = new System.Drawing.Size(152, 57);
             this.button3.TabIndex = 4;
             this.button3.Text = "Удалить";
             this.button3.UseVisualStyleBackColor = true;
@@ -94,12 +85,16 @@
             this.SRC_IP,
             this.SRC_Port,
             this.DST_IP,
-            this.DST_Port});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 33);
+            this.DST_Port,
+            this.INFO,
+            this.CODE,
+            this.NAME_OF_USB});
+            this.dataGridView1.Location = new System.Drawing.Point(0, 1);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(555, 287);
+            this.dataGridView1.Size = new System.Drawing.Size(931, 287);
             this.dataGridView1.TabIndex = 5;
             // 
             // SRC_IP
@@ -137,38 +132,69 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(561, 33);
+            this.button4.Location = new System.Drawing.Point(309, 294);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(143, 23);
+            this.button4.Size = new System.Drawing.Size(143, 57);
             this.button4.TabIndex = 6;
             this.button4.Text = "Запустить";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(469, 294);
+            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(143, 57);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "Остановить";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // INFO
+            // 
+            this.INFO.HeaderText = "INFO";
+            this.INFO.MinimumWidth = 6;
+            this.INFO.Name = "INFO";
+            this.INFO.Width = 125;
+            // 
+            // CODE
+            // 
+            this.CODE.HeaderText = "CODE";
+            this.CODE.MinimumWidth = 6;
+            this.CODE.Name = "CODE";
+            this.CODE.Width = 125;
+            // 
+            // NAME_OF_USB
+            // 
+            this.NAME_OF_USB.HeaderText = "NAME_OF_USB";
+            this.NAME_OF_USB.MinimumWidth = 6;
+            this.NAME_OF_USB.Name = "NAME_OF_USB";
+            this.NAME_OF_USB.Width = 125;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(893, 431);
+            this.ClientSize = new System.Drawing.Size(932, 364);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
@@ -179,6 +205,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DST_Port;
         private Bunifu.Framework.UI.BunifuElipse bunifuElipse1;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn INFO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CODE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NAME_OF_USB;
     }
 }
 
