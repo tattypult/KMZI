@@ -11,7 +11,6 @@ namespace WindowsFormsApplication1
 {
     internal class ExaminationBD
     {
-        string path = @"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt";
         mainEntities main = new mainEntities();
         Message mes;
         string myConnString = "Data Source=DB.db;";

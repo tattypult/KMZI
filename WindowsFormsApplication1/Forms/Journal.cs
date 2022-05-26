@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
     public partial class Journal : Form
     {
         string[] str;
-        string path = @"C:\Users\user\Desktop\WFA1\WindowsFormsApplication1\log.txt";
+        string path = Path.GetFullPath(@".\log.txt");
         public Journal()
         {
             str = File.ReadAllLines(path);

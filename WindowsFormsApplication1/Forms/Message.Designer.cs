@@ -39,20 +39,20 @@
             // label1
             // 
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(80, 18);
-            this.label1.MaximumSize = new System.Drawing.Size(280, 199);
+            this.label1.Location = new System.Drawing.Point(60, 15);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.MaximumSize = new System.Drawing.Size(210, 162);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(195, 87);
+            this.label1.Size = new System.Drawing.Size(146, 71);
             this.label1.TabIndex = 1;
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 124);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Location = new System.Drawing.Point(9, 101);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 28);
+            this.button1.Size = new System.Drawing.Size(66, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "ОК";
             this.button1.UseVisualStyleBackColor = true;
@@ -61,19 +61,18 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(13, 40);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(10, 32);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(60, 52);
+            this.pictureBox1.Size = new System.Drawing.Size(45, 42);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(106, 124);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Location = new System.Drawing.Point(80, 101);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(88, 28);
+            this.button2.Size = new System.Drawing.Size(66, 23);
             this.button2.TabIndex = 4;
             this.button2.Text = "Закрыть";
             this.button2.UseVisualStyleBackColor = true;
@@ -81,16 +80,17 @@
             // 
             // Message
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 158);
+            this.ClientSize = new System.Drawing.Size(215, 128);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Message";
+            this.ShowInTaskbar = false;
             this.Text = "Message";
             this.Load += new System.EventHandler(this.Message_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
