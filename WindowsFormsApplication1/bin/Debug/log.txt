@@ -1,30 +1,9 @@
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
-System.Threading.Tasks.Task`1[System.String] Событие DATE_AND_TIME:
+ Дата:  Время:  Событие SRC_PORT:
+ Дата:  Время:  Событие DST_IP:
+ Дата:  Время:  Событие DST_PORT:
+ Дата:  Время:  Событие SRC_PORT:
+ Дата:  Время:  Событие DST_IP:
+ Дата:  Время:  Событие DST_PORT:
+ Дата:  Время:  Событие SRC_PORT:
+ Дата:  Время:  Событие DST_IP:
+ Дата:  Время:  Событие DST_PORT:

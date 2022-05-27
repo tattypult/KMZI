@@ -16,6 +16,15 @@ namespace WindowsFormsApplication1
         string[] line;
         double[] size = new double[4];
         int count = 0;
+        string myConnString = "Data Source=DB.db;";
+        long IDF = 0;
+        long IDK = 0;
+        long IDU = 0;
+        long ID1 = 0;
+        long ID2 = 0;
+        long ID3 = 0;
+        SQLiteConnection sqConnection;
+        SQLiteCommand sqCommand;
 
         ExaminationBD examinationBD;
         mainEntities main;
@@ -24,6 +33,7 @@ namespace WindowsFormsApplication1
 
         public Form1()
         {
+            sqConnection = new SQLiteConnection(myConnString);
             main = new mainEntities();
             backgroung = new BackgroungCheck();
             examinationBD = new ExaminationBD();
@@ -99,11 +109,30 @@ namespace WindowsFormsApplication1
         async private void Timer(object sender, System.Timers.ElapsedEventArgs e)
         {
             count = 0;
-            count = await backgroung.OnChangedFIREWALLAsync(dataGridView1);
-            count = await backgroung.OnChangedKASPERSKYAsync(dataGridView1);
-            count = await backgroung.OnChangedUSBAsync(dataGridView1);
-            if (count > 0)
-                new Message().ShowDialog();
+            main.ChangeTracker.Entries().ToList().ForEach(k => k.Reload());
+            main.SaveChanges();
+            ID1 = main.FIREWALL.Max(id => id.ID);
+            ID2 = main.KASPERSKY.Max(id => id.ID);
+            ID3 = main.USB.Max(id => id.ID);
+            if (IDF == ID1 && IDK == ID2 && IDU == ID3)
+            {
+                count = 0;
+                goto Next;
+            }
+            else
+            {
+                IDF = ID1;
+                IDK = ID2;
+                IDU = ID3;
+                count = await backgroung.OnChangedFIREWALLAsync(dataGridView1,IDF);
+                count = await backgroung.OnChangedKASPERSKYAsync(dataGridView1,IDK);
+                count = await backgroung.OnChangedUSBAsync(dataGridView1,IDU);
+            }
+            Next:
+            {
+                if (count > 0)
+                    new Message().ShowDialog();
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -114,6 +143,15 @@ namespace WindowsFormsApplication1
         private void button3_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            sqConnection.Open();
+            sqCommand = new SQLiteCommand("Insert into FIREWALL(SRC_IP) values ('10.33.78.20') ", sqConnection);
+            sqCommand.ExecuteNonQuery();
+            main.SaveChanges();
+            sqConnection.Close();
         }
     }
     //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";

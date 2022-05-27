@@ -1,8 +1,6 @@
 ﻿
 using Devart.Data.SQLite;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +29,7 @@ namespace WindowsFormsApplication1
         async public Task<int> ExaminationSrc(StreamWriter stream)
         {
             Program.message = new Form1();
+            main.SaveChanges();
             sqConnection.Open();
             for (int i = 0; i < Program.message.dataGridView1.RowCount - 1; i++)
             {
@@ -53,6 +52,7 @@ namespace WindowsFormsApplication1
         {
 
             Program.message = new Form1();
+            main.SaveChanges();
             sqConnection.Open();
             for (int i = 0; i < Program.message.dataGridView1.RowCount - 1; i++)
             {
@@ -75,6 +75,7 @@ namespace WindowsFormsApplication1
         async public Task<int> ExaminationDst(StreamWriter stream)
         {
             Program.message = new Form1();
+            main.SaveChanges();
             sqConnection.Open();
             for (int i = 0; i < Program.message.dataGridView1.RowCount - 1; i++)
             {
@@ -222,7 +223,7 @@ namespace WindowsFormsApplication1
                 Select(l => new { l.MONTH, l.CHISLO, l.TIME }))
             {
                 datetime = " Месяц: " + item.MONTH + " Число: " + item.CHISLO + " Время: " + item.TIME;
-                break;
+                //break;
             }
             await Task.Delay(0);
             return datetime;
@@ -240,7 +241,7 @@ namespace WindowsFormsApplication1
                 Select(l => new { l.DATE, l.TIME }))
             {
                 datetime = " Дата: " + item.DATE + " Время: " + item.TIME;
-                break;
+                //break;
             }
             await Task.Delay(0);
             return datetime;
@@ -257,7 +258,8 @@ namespace WindowsFormsApplication1
                 Select(l => new { l.DATE, l.TIME }))
             {
                 datetime = " Дата: " + item.DATE + " Время: " + item.TIME;
-                break;
+                /*break*/
+                ;
             }
             await Task.Delay(0);
             return datetime;
