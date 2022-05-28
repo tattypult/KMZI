@@ -11,18 +11,19 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        string path = Path.GetFullPath(@".\data.txt");
-        string[] str;
-        string[] line;
-        double[] size = new double[4];
-        int count = 0;
-        string myConnString = "Data Source=DB.db;";
         long IDF = 0;
         long IDK = 0;
         long IDU = 0;
         long ID1 = 0;
         long ID2 = 0;
         long ID3 = 0;
+        string path = Path.GetFullPath(@".\data.txt");
+        string[] str;
+        string[] line;
+        double[] size = new double[4];
+        int count = 0;
+        string myConnString = "Data Source=DB.db;";
+
         SQLiteConnection sqConnection;
         SQLiteCommand sqCommand;
 
@@ -82,20 +83,26 @@ namespace WindowsFormsApplication1
         /// <param name="e"></param>
         async private void button2_Click(object sender, EventArgs e)
         {
-            count = await examinationBD.ExaminationSrc(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
-            count = await examinationBD.ExaminationSrcPort(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
-            count = await examinationBD.ExaminationDstPort(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
-            count = await examinationBD.ExaminationDst(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
-            count = await examinationBD.ExaminationINFO(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
-            count = await examinationBD.ExaminationCODE(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
-            count = await examinationBD.ExaminationNAME_OF_USB(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+            try
+            {
+                count = await examinationBD.ExaminationSrc(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+                count = await examinationBD.ExaminationSrcPort(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+                count = await examinationBD.ExaminationDstPort(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+                count = await examinationBD.ExaminationDst(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+                count = await examinationBD.ExaminationINFO(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+                count = await examinationBD.ExaminationCODE(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+                count = await examinationBD.ExaminationNAME_OF_USB(new StreamWriter(Path.GetFullPath(@".\log.txt"), true));
+            }
+            catch (Exception)
+            {
+            }
             if (count > 0)
             {
                 new Message().ShowDialog();
             }
         }
         /// <summary>
-        /// Метод, вызывающийся через 1 сек и проверяющий базу данных
+        /// Запуск и настройка таймера
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -106,45 +113,75 @@ namespace WindowsFormsApplication1
             timer.Start();
             await Task.Delay(0);
         }
+        /// <summary>
+        /// Проверка базы данных на последнюю строчку
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async private void Timer(object sender, System.Timers.ElapsedEventArgs e)
         {
-            count = 0;
-            main.ChangeTracker.Entries().ToList().ForEach(k => k.Reload());
-            main.SaveChanges();
-            ID1 = main.FIREWALL.Max(id => id.ID);
-            ID2 = main.KASPERSKY.Max(id => id.ID);
-            ID3 = main.USB.Max(id => id.ID);
-            if (IDF == ID1 && IDK == ID2 && IDU == ID3)
+            try
             {
                 count = 0;
-                goto Next;
+                main.ChangeTracker.Entries().ToList().ForEach(k => k.Reload());
+                main.SaveChanges();
+                ID1 = main.FIREWALL.Max(id => id.ID);
+                ID2 = main.KASPERSKY.Max(id => id.ID);
+                ID3 = main.USB.Max(id => id.ID);
+                if (IDF == ID1 && IDK == ID2 && IDU == ID3)
+                {
+                    count = 0;
+                    goto Next;
+                }
+                else
+                {
+                    IDF = ID1;
+                    IDK = ID2;
+                    IDU = ID3;
+                    count = await backgroung.OnChangedFIREWALLAsync(dataGridView1, IDF);
+                    count = await backgroung.OnChangedKASPERSKYAsync(dataGridView1, IDK);
+                    count = await backgroung.OnChangedUSBAsync(dataGridView1, IDU);
+                }
             }
-            else
+            catch (Exception)
             {
-                IDF = ID1;
-                IDK = ID2;
-                IDU = ID3;
-                count = await backgroung.OnChangedFIREWALLAsync(dataGridView1,IDF);
-                count = await backgroung.OnChangedKASPERSKYAsync(dataGridView1,IDK);
-                count = await backgroung.OnChangedUSBAsync(dataGridView1,IDU);
             }
-            Next:
+        Next:
             {
                 if (count > 0)
                     new Message().ShowDialog();
             }
         }
-
+        /// <summary>
+        /// Таймер стоп
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button5_Click(object sender, EventArgs e)
         {
             timer.Stop();
         }
-
+        /// <summary>
+        /// Кнопка удаления
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            try
+            {
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
+        /// <summary>
+        /// Добавление нового значения в базу данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button6_Click(object sender, EventArgs e)
         {
             sqConnection.Open();
@@ -154,25 +191,4 @@ namespace WindowsFormsApplication1
             sqConnection.Close();
         }
     }
-    //string mySelectQuery = "SELECT SRC_IP FROM FIREWALL";
-    //string myConnString = "DataSource=DB.db;";
-    //SQLiteConnection sqConnection = new SQLiteConnection(myConnString);
-    //SQLiteCommand sqCommand = new SQLiteCommand(mySelectQuery, sqConnection);
-    //sqConnection.Open();
-    //SQLiteDataReader sqReader = sqCommand.ExecuteReader();
-    //var enumer= sqReader.;
-    //for (int i = 0; sqReader.Read(); i++)
-    //{
-
-    //    if (enumer == listBox1.Items[3])
-    //        MessageBox.Show("Alarm Пиздец");
-    //}
-    //sqReader.Close();
-    //// always call Close when done reading.
-    //sqConnection.Close();
-    //string query = "SELECT SRC_IP,SRC_PORT,DST_IP,DST_PORT FROM FIREWALL";
-    //SqlCommand command = new SqlCommand(query);
-    //var dep = new SqlDependency(command);
-    //SQLiteConnection sql=new SQLiteConnection(connectionString);
-    //sql.Open();
 }

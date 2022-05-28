@@ -15,7 +15,6 @@ namespace WindowsFormsApplication1
         SQLiteConnection sqConnection;
         SQLiteCommand sqCommand;
         int count = 0;
-
         string datetime = null;
 
         public ExaminationBD()
@@ -223,7 +222,7 @@ namespace WindowsFormsApplication1
                 Select(l => new { l.MONTH, l.CHISLO, l.TIME }))
             {
                 datetime = " Месяц: " + item.MONTH + " Число: " + item.CHISLO + " Время: " + item.TIME;
-                //break;
+                break;
             }
             await Task.Delay(0);
             return datetime;
@@ -241,7 +240,7 @@ namespace WindowsFormsApplication1
                 Select(l => new { l.DATE, l.TIME }))
             {
                 datetime = " Дата: " + item.DATE + " Время: " + item.TIME;
-                //break;
+                break;
             }
             await Task.Delay(0);
             return datetime;
@@ -258,7 +257,7 @@ namespace WindowsFormsApplication1
                 Select(l => new { l.DATE, l.TIME }))
             {
                 datetime = " Дата: " + item.DATE + " Время: " + item.TIME;
-                /*break*/
+                break
                 ;
             }
             await Task.Delay(0);
